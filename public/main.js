@@ -1,11 +1,10 @@
 const socket = io()
-
 const clientsTotal =  document.getElementById('client-total');
-
 const messageContainer = document.getElementById('message-container');
 const nameInput = document.getElementById('name-input');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
+const messageTone = new Audio('/message-tone.mp3');
 
 messageForm.addEventListener('submit', (e)=>{
     e.preventDefault();
@@ -32,6 +31,7 @@ function sendMesaage(){
 
 socket.on('chat-message', (data)=>{
     // console.log(data)
+    messageTone.play()
     addMessageToUI(false, data)
 })
 
@@ -78,11 +78,11 @@ socket.on('feedback', (data)=>{
     </p>
     </li>`
     
-    messageContainer.innerHTML += element
+    messageContainer.innerHTML += element;
 })
 
 function clearFeedback(){
     document.querySelectorAll('li.message-feedback').forEach(element => {
-        element.parentNode.removeChild(element)
+        element.parentNode.removeChild(element);
     })
 }
